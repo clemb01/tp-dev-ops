@@ -22,6 +22,7 @@ jobs:
 
     env:
       JHI_E2E_HEADLESS: 'true'
+      HEROKY_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
