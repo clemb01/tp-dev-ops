@@ -39,6 +39,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
            node-version: 14.16.1
+      - uses: actions/setup-java@v1
+        with:
+           java-version: '11.x'
       - name: Unit Tests front
         run: npm run ci:frontend:test
 
@@ -53,6 +56,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
            node-version: 14.16.1
+      - uses: actions/setup-java@v1
+        with:
+           java-version: '11.x'
       - name: Unit Tests back
         run: chmod +x mvnw && npm run ci:backend:test
 
