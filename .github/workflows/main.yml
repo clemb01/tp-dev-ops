@@ -15,21 +15,21 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  setting-up:
-    runs-on: ubuntu-latest
+  #setting-up:
+    #runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-           node-version: 14.16.1
-      - name: Install node.js packages
-        run: npm install
+    #steps:
+      #- uses: actions/checkout@v2
+        #with:
+          #fetch-depth: 0
+      #- uses: actions/setup-node@v1
+        #with:
+           #node-version: 14.16.1
+      #- name: Install node.js packages
+        #run: npm install
 
   front:
-    needs: setting-up
+    #needs: setting-up
     runs-on: ubuntu-latest
 
     steps:
@@ -42,11 +42,13 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
+      - name: Install node.js packages
+        run: npm install
       - name: Unit Tests front
         run: npm run ci:frontend:test
 
   back:
-    needs: setting-up
+    #needs: setting-up
     runs-on: ubuntu-latest
 
     steps:
