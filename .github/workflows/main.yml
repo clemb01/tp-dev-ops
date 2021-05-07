@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
-      - uses: actions/actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.5
         env:
           cache-name: cache-node-modules
         with:
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
-      - uses: actions/actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.5
         env:
           cache-name: cache-node-modules
         with:
@@ -112,7 +112,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
-      - uses: actions/actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.5
         env:
           cache-name: cache-node-modules
         with:
@@ -156,7 +156,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
-      - uses: actions/actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.5
         env:
           cache-name: cache-node-modules
         with:
