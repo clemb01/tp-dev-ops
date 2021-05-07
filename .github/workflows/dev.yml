@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,7 +22,6 @@ jobs:
 
     env:
       JHI_E2E_HEADLESS: 'true'
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,23 +37,12 @@ jobs:
       - name: Install node.js packages
         run: npm install
         
-<<<<<<< HEAD
       - name: Run Unit Tests front
         run: npm run ci:frontend:test
       
       - name: Run Unit Tests back
         run: chmod +x mvnw && npm run ci:backend:test
       
-=======
-      # - name: Unit Tests front
-      #   run: npm run ci:frontend:test
-      
-      # - name: Unit Tests back
-      #   run: chmod +x mvnw && npm run ci:backend:test
-      
-      # - name: Test integrations
-      #   run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"* && npm run ci:e2e:prepare:docker && npm run ci:e2e:run && npm run ci:e2e:teardown
-      
-      - name: Deploying on Heroku
-        run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=stark-citadel-71344
->>>>>>> dev
+      - name: Run Test integrations
+        run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"* && npm run ci:e2e:prepare:docker && npm run ci:e2e:run && npm run ci:e2e:teardown
+        

@@ -12,7 +12,7 @@
 
 eureka:
   instance:
-    hostname: protected-bastion-12594.herokuapp.com
+    hostname: stark-citadel-71344.herokuapp.com
     non-secure-port: 80
     prefer-ip-address: false
 
