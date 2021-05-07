@@ -38,14 +38,6 @@ jobs:
       - name: Install node.js packages
         run: npm install
         
-<<<<<<< HEAD
-      - name: Run Unit Tests front
-        run: npm run ci:frontend:test
-      
-      - name: Run Unit Tests back
-        run: chmod +x mvnw && npm run ci:backend:test
-      
-=======
       # - name: Unit Tests front
       #   run: npm run ci:frontend:test
       
@@ -57,4 +49,3 @@ jobs:
       
       - name: Deploying on Heroku
         run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=stark-citadel-71344
->>>>>>> dev
