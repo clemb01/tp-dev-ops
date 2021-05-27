@@ -31,7 +31,7 @@ jobs:
       - uses: actions/cache@v2.1.5
         id: cache-node-modules
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/cache@v2.1.5
         id: cache-node-modules
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/cache@v2.1.5
         id: cache-node-modules
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -178,7 +178,7 @@ jobs:
       - uses: actions/cache@v2.1.5
         id: cache-node-modules
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
