@@ -45,7 +45,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
            node-version: 14.16.1
@@ -67,7 +66,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
@@ -95,7 +93,6 @@ jobs:
       JHI_E2E_HEADLESS: 'true'
 
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
@@ -131,7 +128,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/cache@v2.1.5
         with:
           path: ~/.m2
@@ -160,6 +156,5 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
       - name: Deploying on Heroku
         run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=stark-citadel-71344
