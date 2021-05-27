@@ -142,6 +142,8 @@ jobs:
         with:
           name: target
           path: ~/target/
+      - name: files
+        run: ll -ls target
       - name: Build and analyze
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
