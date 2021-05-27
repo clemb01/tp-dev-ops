@@ -26,18 +26,13 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
-      - uses: actions/cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
       - name: Install node.js packages
         run: npm install
+      - name: Creating artefact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: ${{ github.workspace }}
 
   front:
     needs: initialisation
@@ -45,16 +40,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
+      - name: Restoring artefact 
+        uses: actions/download-artifact@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          name: artifact
+          path: ${{ github.workspace }}
       - name: Unit Tests front
         run: npm run ci:frontend:test
 
@@ -64,6 +54,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Restoring artefact 
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: ${{ github.workspace }}
       - name: Unit Tests back
         run: chmod +x mvnw && npm run ci:backend:test
 
@@ -76,16 +71,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
+      - name: Restoring artefact 
+        uses: actions/download-artifact@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          name: artifact
+          path: ${{ github.workspace }}
       - name: Test integrations
         run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"* && npm run ci:e2e:prepare:docker && npm run ci:e2e:run && npm run ci:e2e:teardown
 
@@ -104,28 +94,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
+      - name: Restoring artefact 
+        uses: actions/download-artifact@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.5
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v2.1.5
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          name: artifact
+          path: ${{ github.workspace }}
       - name: Build and analyze
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
@@ -139,15 +112,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
+      - uses: actions/checkout@v2
+      - name: Restoring artefact 
+        uses: actions/download-artifact@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          name: artifact
+          path: ${{ github.workspace }}
       - name: Deploying on Heroku
         run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=stark-citadel-71344
