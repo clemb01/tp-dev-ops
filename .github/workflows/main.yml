@@ -40,7 +40,7 @@ jobs:
       - uses: actions/cache@v2.1.5
         id: cache-target
         env:
-          cache-name: cache-target-front
+          cache-name: cache-target
         with:
           path: '**/target'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
@@ -66,9 +66,9 @@ jobs:
         with:
            java-version: '11.x'
       - uses: actions/cache@v2.1.5
-        id: cache-target-back
+        id: cache-target
         env:
-          cache-name: cache-target-back
+          cache-name: cache-target
         with:
           path: '**/target'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
@@ -104,27 +104,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
       - uses: actions/cache@v2.1.5
-        id: cache-target-front
+        id: cache-target
         env:
-          cache-name: cache-target-front
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-back
-        env:
-          cache-name: cache-target-back
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-e2e
-        env:
-          cache-name: cache-target-e2e
+          cache-name: cache-target
         with:
           path: '**/target'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
@@ -163,27 +145,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
       - uses: actions/cache@v2.1.5
-        id: cache-target-front
+        id: cache-target
         env:
-          cache-name: cache-target-front
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-back
-        env:
-          cache-name: cache-target-back
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-e2e
-        env:
-          cache-name: cache-target-e2e
+          cache-name: cache-target
         with:
           path: '**/target'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
@@ -221,27 +185,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
       - uses: actions/cache@v2.1.5
-        id: cache-target-front
+        id: cache-target
         env:
-          cache-name: cache-target-front
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-back
-        env:
-          cache-name: cache-target-e2e
-        with:
-          path: '**/target'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - uses: actions/cache@v2.1.5
-        id: cache-target-e2e
-        env:
-          cache-name: cache-target-e2e
+          cache-name: cache-target
         with:
           path: '**/target'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
