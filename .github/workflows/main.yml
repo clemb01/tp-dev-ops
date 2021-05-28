@@ -29,23 +29,28 @@ jobs:
         with:
            java-version: '11.x'
       - uses: actions/cache@v2.1.5
+        env:
+          cache-name: cache-node-modules
         id: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      - uses: actions/cache@v2.1.5
+        id: cache-target
+        env:
+          cache-name: cache-target
+        with:
+          path: '**/target'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Install node.js packages
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
       - name: Unit Tests front
         run: npm run ci:frontend:test
-      - uses: actions/upload-artifact@v2
-        with:
-          name: target-front
-          path: target/
 
   back:
     runs-on: ubuntu-latest
@@ -60,12 +65,17 @@ jobs:
       - uses: actions/setup-java@v1
         with:
            java-version: '11.x'
+      - uses: actions/cache@v2.1.5
+        id: cache-target
+        env:
+          cache-name: cache-target
+        with:
+          path: '**/target'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Unit Tests back
         run: chmod +x mvnw && npm run ci:backend:test
-      - uses: actions/upload-artifact@v2
-        with:
-          name: target-back
-          path: target/
 
   e2e:
     needs: [ front, back ]
@@ -85,20 +95,25 @@ jobs:
         with:
            java-version: '11.x'
       - uses: actions/cache@v2.1.5
+        env:
+          cache-name: cache-node-modules
         id: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      - uses: actions/cache@v2.1.5
+        id: cache-target
+        env:
+          cache-name: cache-target
+        with:
+          path: '**/target'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Test integrations
         run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"* && npm run ci:e2e:prepare:docker && npm run ci:e2e:run && npm run ci:e2e:teardown
-      - uses: actions/upload-artifact@v2
-        with:
-          name: target-e2e
-          path: target/
 
   sonar:
     needs: e2e
@@ -121,38 +136,23 @@ jobs:
         with:
            java-version: '11.x'
       - uses: actions/cache@v2.1.5
+        env:
+          cache-name: cache-node-modules
         id: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.5
+        id: cache-target
+        env:
+          cache-name: cache-target
         with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v2.1.5
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - uses: actions/download-artifact@v2
-        with:
-          name: target-front
-          path: target/
-      - uses: actions/download-artifact@v2
-        with:
-          name: target-back
-          path: target/
-      - uses: actions/download-artifact@v2
-        with:
-          name: target-e2e
-          path: target/
+          path: '**/target'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Build and analyze
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
@@ -176,14 +176,23 @@ jobs:
         with:
            java-version: '11.x'
       - uses: actions/cache@v2.1.5
+        env:
+          cache-name: cache-node-modules
         id: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      - uses: actions/cache@v2.1.5
+        id: cache-target
+        env:
+          cache-name: cache-target
+        with:
+          path: '**/target'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Build prod
         run: npm run webapp:build:prod
       - name: Deploying on Heroku
